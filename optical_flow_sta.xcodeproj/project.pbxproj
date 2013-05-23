@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC0C7397174E4E9F00E80F65 /* optical_flow_sta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */; };
+		EC8618D1174E7697005E583F /* sta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618CF174E75FC005E583F /* sta.cpp */; };
+		EC8618D2174E7886005E583F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,9 +24,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = optical_flow_sta.cpp; path = src/optical_flow_sta.cpp; sourceTree = "<group>"; };
+		EC5E702E174E2BFE009F476C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
 		EC5E7032174E2C5C009F476C /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = CMakeLists.txt; sourceTree = "<group>"; usesTabs = 1; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
 		EC8618CE174E64A0005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = code_completion; path = /Users/srdan/Development/optical_flow_sta/build/Release/code_completion; sourceTree = "<absolute>"; };
+		EC8618CF174E75FC005E583F /* sta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sta.cpp; path = src/sta.cpp; sourceTree = "<group>"; };
+		EC8618D0174E75FC005E583F /* sta.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = sta.h; path = src/sta.h; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +53,9 @@
 		EC5E7030174E2C3D009F476C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */,
+				EC5E702E174E2BFE009F476C /* main.cpp */,
+				EC8618D0174E75FC005E583F /* sta.h */,
+				EC8618CF174E75FC005E583F /* sta.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -131,7 +136,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC0C7397174E4E9F00E80F65 /* optical_flow_sta.cpp in Sources */,
+				EC8618D1174E7697005E583F /* sta.cpp in Sources */,
+				EC8618D2174E7886005E583F /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
