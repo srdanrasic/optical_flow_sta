@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		EC8618D1174E7697005E583F /* sta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618CF174E75FC005E583F /* sta.cpp */; };
 		EC8618D2174E7886005E583F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* main.cpp */; };
+		EC8618E0174E9CC0005E583F /* libopencv_core.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */; };
+		EC8618E1174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DD174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib */; };
+		EC8618E2174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DE174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib */; };
+		EC8618E3174E9CC0005E583F /* libopencv_video.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DF174E9CC0005E583F /* libopencv_video.2.4.5.dylib */; };
+		EC8618E6174EB0F8005E583F /* helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618E4174EB0F6005E583F /* helper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +31,15 @@
 /* Begin PBXFileReference section */
 		EC5E702E174E2BFE009F476C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
 		EC5E7032174E2C5C009F476C /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = CMakeLists.txt; sourceTree = "<group>"; usesTabs = 1; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
-		EC8618CE174E64A0005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = code_completion; path = /Users/srdan/Development/optical_flow_sta/build/Release/code_completion; sourceTree = "<absolute>"; };
 		EC8618CF174E75FC005E583F /* sta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sta.cpp; path = src/sta.cpp; sourceTree = "<group>"; };
 		EC8618D0174E75FC005E583F /* sta.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = sta.h; path = src/sta.h; sourceTree = "<group>"; tabWidth = 2; };
+		EC8618D3174E9C0F005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = code_completion; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_core.2.4.5.dylib; sourceTree = "<absolute>"; };
+		EC8618DD174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_highgui.2.4.5.dylib; sourceTree = "<absolute>"; };
+		EC8618DE174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_imgproc.2.4.5.dylib; sourceTree = "<absolute>"; };
+		EC8618DF174E9CC0005E583F /* libopencv_video.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_video.2.4.5.dylib; sourceTree = "<absolute>"; };
+		EC8618E4174EB0F6005E583F /* helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helper.cpp; path = src/helper.cpp; sourceTree = "<group>"; };
+		EC8618E5174EB0F6005E583F /* helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helper.h; path = src/helper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +47,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC8618E0174E9CC0005E583F /* libopencv_core.2.4.5.dylib in Frameworks */,
+				EC8618E1174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib in Frameworks */,
+				EC8618E2174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib in Frameworks */,
+				EC8618E3174E9CC0005E583F /* libopencv_video.2.4.5.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +71,8 @@
 				EC5E702E174E2BFE009F476C /* main.cpp */,
 				EC8618D0174E75FC005E583F /* sta.h */,
 				EC8618CF174E75FC005E583F /* sta.cpp */,
+				EC8618E5174EB0F6005E583F /* helper.h */,
+				EC8618E4174EB0F6005E583F /* helper.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -63,6 +80,11 @@
 		EC5E7031174E2C48009F476C /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				EC8618D3174E9C0F005E583F /* code_completion */,
+				EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */,
+				EC8618DD174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib */,
+				EC8618DE174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib */,
+				EC8618DF174E9CC0005E583F /* libopencv_video.2.4.5.dylib */,
 				EC5E7032174E2C5C009F476C /* CMakeLists.txt */,
 			);
 			name = Other;
@@ -101,7 +123,7 @@
 			);
 			name = code_completion;
 			productName = code_completion;
-			productReference = EC8618CE174E64A0005E583F /* code_completion */;
+			productReference = EC8618D3174E9C0F005E583F /* code_completion */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -138,6 +160,7 @@
 			files = (
 				EC8618D1174E7697005E583F /* sta.cpp in Sources */,
 				EC8618D2174E7886005E583F /* main.cpp in Sources */,
+				EC8618E6174EB0F8005E583F /* helper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +170,13 @@
 		EC0C7393174E4E1000E80F65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/opencv/2.4.5/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -155,7 +184,13 @@
 		EC0C7394174E4E1000E80F65 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/opencv/2.4.5/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
