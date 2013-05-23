@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( optical_flow_sta )
+find_package( OpenCV REQUIRED )
+file( GLOB optical_flow_sta_SRC "src/*.h" "src/*.cpp" )
+add_executable( optical_flow_sta ${optical_flow_sta_SRC} )
+target_link_libraries( optical_flow_sta ${OpenCV_LIBS} )

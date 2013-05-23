@@ -6,11 +6,61 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EC0C7397174E4E9F00E80F65 /* optical_flow_sta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EC0C7389174E4E1000E80F65 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = optical_flow_sta.cpp; path = src/optical_flow_sta.cpp; sourceTree = "<group>"; };
+		EC5E7032174E2C5C009F476C /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = CMakeLists.txt; sourceTree = "<group>"; usesTabs = 1; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
+		EC8618CE174E64A0005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = code_completion; path = /Users/srdan/Development/optical_flow_sta/build/Release/code_completion; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC0C7388174E4E1000E80F65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		EC5E7023174E2BD3009F476C = {
 			isa = PBXGroup;
 			children = (
+				EC5E7030174E2C3D009F476C /* Source */,
+				EC5E7031174E2C48009F476C /* Other */,
 			);
+			sourceTree = "<group>";
+		};
+		EC5E7030174E2C3D009F476C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EC5E702E174E2BFE009F476C /* optical_flow_sta.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		EC5E7031174E2C48009F476C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				EC5E7032174E2C5C009F476C /* CMakeLists.txt */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -31,6 +81,26 @@
 		};
 /* End PBXLegacyTarget section */
 
+/* Begin PBXNativeTarget section */
+		EC0C738A174E4E1000E80F65 /* code_completion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC0C7392174E4E1000E80F65 /* Build configuration list for PBXNativeTarget "code_completion" */;
+			buildPhases = (
+				EC0C7387174E4E1000E80F65 /* Sources */,
+				EC0C7388174E4E1000E80F65 /* Frameworks */,
+				EC0C7389174E4E1000E80F65 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = code_completion;
+			productName = code_completion;
+			productReference = EC8618CE174E64A0005E583F /* code_completion */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
 /* Begin PBXProject section */
 		EC5E7024174E2BD3009F476C /* Project object */ = {
 			isa = PBXProject;
@@ -46,15 +116,44 @@
 				en,
 			);
 			mainGroup = EC5E7023174E2BD3009F476C;
+			productRefGroup = EC5E7023174E2BD3009F476C;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				EC5E7028174E2BD3009F476C /* optical_flow_sta */,
+				EC0C738A174E4E1000E80F65 /* code_completion */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXSourcesBuildPhase section */
+		EC0C7387174E4E1000E80F65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC0C7397174E4E9F00E80F65 /* optical_flow_sta.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
 /* Begin XCBuildConfiguration section */
+		EC0C7393174E4E1000E80F65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EC0C7394174E4E1000E80F65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		EC5E7029174E2BD3009F476C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -115,6 +214,7 @@
 		EC5E702C174E2BD3009F476C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUGGING_SYMBOLS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -127,6 +227,7 @@
 		EC5E702D174E2BD3009F476C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -136,6 +237,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EC0C7392174E4E1000E80F65 /* Build configuration list for PBXNativeTarget "code_completion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC0C7393174E4E1000E80F65 /* Debug */,
+				EC0C7394174E4E1000E80F65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EC5E7027174E2BD3009F476C /* Build configuration list for PBXProject "optical_flow_sta" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -152,6 +262,7 @@
 				EC5E702D174E2BD3009F476C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
