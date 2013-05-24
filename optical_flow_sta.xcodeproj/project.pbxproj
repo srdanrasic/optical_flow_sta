@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC8618D1174E7697005E583F /* sta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618CF174E75FC005E583F /* sta.cpp */; };
+		EC80B285174F9B9D008D1B4A /* IntensityKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC80B284174F9B9D008D1B4A /* IntensityKernel.cpp */; };
+		EC80B28B174F9FB0008D1B4A /* MeanIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC80B289174F9FB0008D1B4A /* MeanIntegrator.cpp */; };
+		EC8618D1174E7697005E583F /* FirstOrderDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618CF174E75FC005E583F /* FirstOrderDescriptor.cpp */; };
 		EC8618D2174E7886005E583F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* main.cpp */; };
 		EC8618E0174E9CC0005E583F /* libopencv_core.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */; };
 		EC8618E1174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DD174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib */; };
@@ -31,8 +33,14 @@
 /* Begin PBXFileReference section */
 		EC5E702E174E2BFE009F476C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
 		EC5E7032174E2C5C009F476C /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = CMakeLists.txt; sourceTree = "<group>"; usesTabs = 1; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
-		EC8618CF174E75FC005E583F /* sta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sta.cpp; path = src/sta.cpp; sourceTree = "<group>"; };
-		EC8618D0174E75FC005E583F /* sta.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = sta.h; path = src/sta.h; sourceTree = "<group>"; tabWidth = 2; };
+		EC80B282174F9B19008D1B4A /* Kernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Kernel.h; path = src/Kernel.h; sourceTree = "<group>"; };
+		EC80B283174F9B60008D1B4A /* IntensityKernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IntensityKernel.h; path = src/IntensityKernel.h; sourceTree = "<group>"; };
+		EC80B284174F9B9D008D1B4A /* IntensityKernel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IntensityKernel.cpp; path = src/IntensityKernel.cpp; sourceTree = "<group>"; };
+		EC80B287174F9CF7008D1B4A /* Integrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Integrator.h; path = src/Integrator.h; sourceTree = "<group>"; };
+		EC80B289174F9FB0008D1B4A /* MeanIntegrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeanIntegrator.cpp; path = src/MeanIntegrator.cpp; sourceTree = "<group>"; };
+		EC80B28A174F9FB0008D1B4A /* MeanIntegrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeanIntegrator.h; path = src/MeanIntegrator.h; sourceTree = "<group>"; };
+		EC8618CF174E75FC005E583F /* FirstOrderDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstOrderDescriptor.cpp; path = src/FirstOrderDescriptor.cpp; sourceTree = "<group>"; };
+		EC8618D0174E75FC005E583F /* FirstOrderDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = FirstOrderDescriptor.h; path = src/FirstOrderDescriptor.h; sourceTree = "<group>"; tabWidth = 2; };
 		EC8618D3174E9C0F005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = code_completion; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_core.2.4.5.dylib; sourceTree = "<absolute>"; };
 		EC8618DD174E9CC0005E583F /* libopencv_highgui.2.4.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.5.dylib; path = /usr/local/Cellar/opencv/2.4.5/lib/libopencv_highgui.2.4.5.dylib; sourceTree = "<absolute>"; };
@@ -69,8 +77,14 @@
 			isa = PBXGroup;
 			children = (
 				EC5E702E174E2BFE009F476C /* main.cpp */,
-				EC8618D0174E75FC005E583F /* sta.h */,
-				EC8618CF174E75FC005E583F /* sta.cpp */,
+				EC80B282174F9B19008D1B4A /* Kernel.h */,
+				EC80B283174F9B60008D1B4A /* IntensityKernel.h */,
+				EC80B284174F9B9D008D1B4A /* IntensityKernel.cpp */,
+				EC80B287174F9CF7008D1B4A /* Integrator.h */,
+				EC80B28A174F9FB0008D1B4A /* MeanIntegrator.h */,
+				EC80B289174F9FB0008D1B4A /* MeanIntegrator.cpp */,
+				EC8618D0174E75FC005E583F /* FirstOrderDescriptor.h */,
+				EC8618CF174E75FC005E583F /* FirstOrderDescriptor.cpp */,
 				EC8618E5174EB0F6005E583F /* helper.h */,
 				EC8618E4174EB0F6005E583F /* helper.cpp */,
 			);
@@ -158,9 +172,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC8618D1174E7697005E583F /* sta.cpp in Sources */,
+				EC8618D1174E7697005E583F /* FirstOrderDescriptor.cpp in Sources */,
 				EC8618D2174E7886005E583F /* main.cpp in Sources */,
 				EC8618E6174EB0F8005E583F /* helper.cpp in Sources */,
+				EC80B285174F9B9D008D1B4A /* IntensityKernel.cpp in Sources */,
+				EC80B28B174F9FB0008D1B4A /* MeanIntegrator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

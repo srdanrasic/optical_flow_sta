@@ -13,17 +13,18 @@
 
 void draw_histogram(const char * window_name, cv::Mat histogram)
 {
-  cv::Mat canvas = cv::Mat::zeros(125, 125, CV_8U);
-  float tickness = 125.0 / histogram.rows;
+  cv::Mat canvas = cv::Mat::zeros(125, 300, CV_8U);
+  double tickness = canvas.cols / (double)histogram.rows;
   
   double max;
   cv::minMaxLoc(histogram, 0, &max);
   
-  for (int j = 0, rows = canvas.rows; j < canvas.cols; j++) {
-    line(canvas, cv::Point(j*tickness, rows),
-         cv::Point(j*tickness, rows - (histogram.at<float>(j) * (float)rows) / max),
+  for (int j = 0, rows = canvas.rows; j < histogram.rows; j++) {
+    line(canvas, cv::Point(j * tickness, rows),
+         cv::Point(j * tickness, rows - (histogram.at<float>(j,0) * (float)rows) / max),
          cv::Scalar(200, 200, 200),
-         tickness);
+         tickness
+         );
   }
   
   cv::imshow(window_name, canvas);

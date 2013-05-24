@@ -7,7 +7,10 @@
 //
 
 #include <iostream>
-#include "sta.h"
+#include "FirstOrderDescriptor.h"
+#include "IntensityKernel.h"
+#include "MeanIntegrator.h"
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/video/video.hpp>
@@ -16,12 +19,13 @@
 
 int main(int, char**)
 {
-  cv::VideoCapture cap("/Users/srdan/Downloads/running/person01_running_d3_uncomp.avi");
+  cv::VideoCapture cap("/Users/srdan/Downloads/running/person04_running_d1_uncomp.avi");
   cv::Mat frame;
   cv::namedWindow("Display window", CV_WINDOW_AUTOSIZE);
   
-  STAIntensityKernel kernel(23);
-  STA1Descriptor descriptor(cv::Size2i(2,2), kernel);
+  sta::IntensityKernel kernel(20);
+  sta::MeanIntegrator integrator;
+  sta::FirstOrderDescriptor sta1_descriptor(cv::Size2i(2,2), kernel, integrator);
   
   while (cap.isOpened()) {
     cap >> frame;
@@ -32,8 +36,9 @@ int main(int, char**)
     
     cv::cvtColor(frame, frame, CV_BGR2GRAY);
     cv::GaussianBlur(frame, frame, cv::Size2i(7,7), 1.5);
-    descriptor.update(frame);
-    imshow("Display window", frame);
+    sta1_descriptor.update(frame);
+    cv::imshow("Display window", frame);
+    cv::moveWindow("Display window", 100, 100);
     
     if(cv::waitKey(30) >= 0) {
       break;
