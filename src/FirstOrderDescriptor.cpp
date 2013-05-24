@@ -7,7 +7,6 @@
 //
 
 #include "FirstOrderDescriptor.h"
-#include "helper.h"
 #include <iostream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -16,15 +15,15 @@
 
 namespace sta
 {
-  FirstOrderDescriptor::FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integrator)
-  : grid_size_(grid_size), kernel_(kernel), integrator_(integrator)
+  FirstOrderDescriptor::FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integrator, bool normalize)
+  : grid_size_(grid_size), kernel_(kernel), integrator_(integrator), normalize_(normalize)
   {
     reset();
   }
   
   void FirstOrderDescriptor::reset()
   {
-    descriptor_ = cv::Mat(grid_size_.width * grid_size_.height * kernel_.getHistogramBinCount(), 1, CV_32F);
+    descriptor_ = cv::Mat(grid_size_.width * grid_size_.height * kernel_.getHistogramBinCount(), 1, CV_32F, cv::Scalar(0));
     current_time_ = 0;
   }
   
@@ -35,7 +34,10 @@ namespace sta
     int patch_rows = data.rows / grid_size_.height;
     int patch_cols = data.cols / grid_size_.width;
     
-    assert(patch_rows > 0 && patch_cols > 0);
+    if(patch_rows <= 0 || patch_cols <= 0) {
+      std::cerr << "Warning: Patch to small to process. Skipping frame." << std::endl;
+      return;
+    }
     
     for (int row = 0; row < grid_size_.height; row++) {
       for (int col = 0; col < grid_size_.width; col++) {
@@ -49,16 +51,21 @@ namespace sta
         int index = row * grid_size_.width + col;
         cv::Range histogram_range(cv::Range(index * kernel_.getHistogramBinCount(), (index + 1) * kernel_.getHistogramBinCount()));
         cv::Mat descriptor_part_ = descriptor_.rowRange(histogram_range);
-        cv::Mat histogram(kernel_.getHistogramBinCount(), 1, CV_32F);
+        cv::Mat histogram(kernel_.getHistogramBinCount(), 1, CV_32F, cv::Scalar(0));
         
-        // calc
+        // calculate histogram
         kernel_(patch, histogram);
+        
+        // normalize histogram
+        if (normalize_) {
+          cv::normalize(histogram, histogram);
+        }
+        
+        // integrate
         integrator_(descriptor_part_, histogram, current_time_);
       }
     }
     
-    current_time_++;
-    
-    draw_histogram("Descriptor", descriptor_); cv::moveWindow("Descriptor", 350, 100);
+    current_time_++;    
   }
 }

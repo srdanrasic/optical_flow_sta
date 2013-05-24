@@ -15,7 +15,7 @@ namespace sta
 {
   /*! Mean Integrator
    *  Iterativly updates current result with new histogram
-   *  so final result is average.
+   *  so final result is an average histogram.
    */
   class MeanIntegrator : public Integrator
   {

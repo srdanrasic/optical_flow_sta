@@ -7,40 +7,61 @@
 //
 
 #include <iostream>
-#include "FirstOrderDescriptor.h"
-#include "IntensityKernel.h"
-#include "MeanIntegrator.h"
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/video/video.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 
+#include "FirstOrderDescriptor.h"
+#include "IntensityKernel.h"
+#include "OpticalFlowKernel.h"
+#include "MeanIntegrator.h"
+#include "Utilities.h"
+
 
 int main(int, char**)
 {
-  cv::VideoCapture cap("/Users/srdan/Downloads/running/person04_running_d1_uncomp.avi");
-  cv::Mat frame;
-  cv::namedWindow("Display window", CV_WINDOW_AUTOSIZE);
+  cv::VideoCapture cap("/Users/srdan/Downloads/running/person02_running_d3_uncomp.avi");
+  cv::Mat prev, next, flow;
   
-  sta::IntensityKernel kernel(20);
+  cv::namedWindow("Descriptor", CV_WINDOW_AUTOSIZE);
+  cv::moveWindow("Descriptor", 100, 100);
+  cv::namedWindow("Display window", CV_WINDOW_AUTOSIZE);
+  cv::moveWindow("Display window", 500, 100);
+  
+  int number_of_bins = 8;
+  cv::Size2i grid_size(5,5);
+  
+  sta::OpticalFlowKernel kernel(number_of_bins);
   sta::MeanIntegrator integrator;
-  sta::FirstOrderDescriptor sta1_descriptor(cv::Size2i(2,2), kernel, integrator);
+  sta::FirstOrderDescriptor sta1_descriptor(grid_size, kernel, integrator, true);
+  
+  if (!cap.isOpened()) {
+    return 0;
+  }
+  
+  cap >> prev;
+  cv::cvtColor(prev, prev, CV_BGR2GRAY);
   
   while (cap.isOpened()) {
-    cap >> frame;
+    cap >> next;
 
-    if (frame.empty()) {
+    if (next.empty()) {
       break;
     }
     
-    cv::cvtColor(frame, frame, CV_BGR2GRAY);
-    cv::GaussianBlur(frame, frame, cv::Size2i(7,7), 1.5);
-    sta1_descriptor.update(frame);
-    cv::imshow("Display window", frame);
-    cv::moveWindow("Display window", 100, 100);
+    cv::cvtColor(next, next, CV_BGR2GRAY);
+    cv::calcOpticalFlowFarneback(prev, next, flow, 0.5, 1, 7, 1, 5, 1.1, 0);
+    sta1_descriptor.update(flow);
     
-    if(cv::waitKey(30) >= 0) {
+    cv::imshow("Display window", next);
+    
+    draw_histogram("Descriptor", sta1_descriptor.getDescriptor(), grid_size);
+    
+    prev = next;
+    next.release();
+    
+    if(cv::waitKey(1) >= 0) {
       break;
     }
   }

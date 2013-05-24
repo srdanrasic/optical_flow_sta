@@ -25,13 +25,14 @@ namespace sta
     Kernel &kernel_;
     Integrator &integrator_;
     int current_time_;
+    bool normalize_;
     
   public:
     /*! Creates descriptor
      *  \param grid_size Grid size
      *  \param kernel Kernel to use
      */
-    FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integate_function);
+    FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integate_function, bool normalize);
     
     /*! Returns decriptor
      */
