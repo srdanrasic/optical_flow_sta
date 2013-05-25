@@ -3,7 +3,6 @@
 //  optical_flow_sta
 //
 //  Created by Srđan Rašić on 5/23/13.
-//  Copyright (c) 2013 Srđan Rašić. All rights reserved.
 //
 
 #include <iostream>
@@ -21,7 +20,7 @@
 
 int main(int, char**)
 {
-  cv::VideoCapture cap("/Users/srdan/Downloads/running/person02_running_d3_uncomp.avi");
+  cv::VideoCapture cap("/Users/srdan/Downloads/running/person02_running_d1_uncomp.avi");
   cv::Mat prev, next, flow;
   
   cv::namedWindow("Descriptor", CV_WINDOW_AUTOSIZE);
@@ -29,12 +28,13 @@ int main(int, char**)
   cv::namedWindow("Display window", CV_WINDOW_AUTOSIZE);
   cv::moveWindow("Display window", 500, 100);
   
-  int number_of_bins = 8;
-  cv::Size2i grid_size(5,5);
+  int number_of_bins = 10;
+  int patch_rows = 3;
+  int patch_cols = 2;
   
   sta::OpticalFlowKernel kernel(number_of_bins);
   sta::MeanIntegrator integrator;
-  sta::FirstOrderDescriptor sta1_descriptor(grid_size, kernel, integrator, true);
+  sta::FirstOrderDescriptor sta1_descriptor(patch_rows, patch_cols, kernel, integrator, true);
   
   if (!cap.isOpened()) {
     return 0;
@@ -54,9 +54,7 @@ int main(int, char**)
     cv::calcOpticalFlowFarneback(prev, next, flow, 0.5, 1, 7, 1, 5, 1.1, 0);
     sta1_descriptor.update(flow);
     
-    cv::imshow("Display window", next);
-    
-    draw_histogram("Descriptor", sta1_descriptor.getDescriptor(), grid_size);
+    draw_descriptor("Descriptor", sta1_descriptor.getDescriptor(), patch_rows, patch_cols, next);
     
     prev = next;
     next.release();

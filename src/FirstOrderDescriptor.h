@@ -3,7 +3,6 @@
 //  optical_flow_sta
 //
 //  Created by Srđan Rašić on 5/23/13.
-//  Copyright (c) 2013 Srđan Rašić. All rights reserved.
 //
 
 #ifndef __optical_flow_sta__optical_flow_sta__
@@ -20,8 +19,9 @@ namespace sta
   class FirstOrderDescriptor
   {
   private:
-    cv::Mat descriptor_;
-    cv::Size2i grid_size_;
+    cv::Mat ** descriptor_;
+    int rows_;
+    int cols_;
     Kernel &kernel_;
     Integrator &integrator_;
     int current_time_;
@@ -32,11 +32,11 @@ namespace sta
      *  \param grid_size Grid size
      *  \param kernel Kernel to use
      */
-    FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integate_function, bool normalize);
+    FirstOrderDescriptor(int rows, int cols, Kernel &kernel, Integrator &integate_function, bool normalize);
     
     /*! Returns decriptor
      */
-    cv::Mat getDescriptor() const { return descriptor_; }
+    cv::Mat ** getDescriptor() { return descriptor_; }
     
     /*! Resets state
      *  Call before processing new dataset

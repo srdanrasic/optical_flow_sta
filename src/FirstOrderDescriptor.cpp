@@ -3,7 +3,6 @@
 //  optical_flow_sta
 //
 //  Created by Srđan Rašić on 5/23/13.
-//  Copyright (c) 2013 Srđan Rašić. All rights reserved.
 //
 
 #include "FirstOrderDescriptor.h"
@@ -15,15 +14,22 @@
 
 namespace sta
 {
-  FirstOrderDescriptor::FirstOrderDescriptor(cv::Size2i grid_size, Kernel &kernel, Integrator &integrator, bool normalize)
-  : grid_size_(grid_size), kernel_(kernel), integrator_(integrator), normalize_(normalize)
+  FirstOrderDescriptor::FirstOrderDescriptor(int rows, int cols, Kernel &kernel, Integrator &integrator, bool normalize)
+  : rows_(rows), cols_(cols), kernel_(kernel), integrator_(integrator), normalize_(normalize)
   {
     reset();
   }
   
   void FirstOrderDescriptor::reset()
   {
-    descriptor_ = cv::Mat(grid_size_.width * grid_size_.height * kernel_.getHistogramBinCount(), 1, CV_32F, cv::Scalar(0));
+    descriptor_ = new cv::Mat*[rows_];
+    for (int i = 0; i < rows_; i++) {
+      descriptor_[i] = new cv::Mat[cols_];
+      for (int j = 0; j < cols_; j++) {
+        descriptor_[i][j] = cv::Mat::zeros(kernel_.getHistogramBinCount(), 1, CV_32F);
+      }
+    }
+    
     current_time_ = 0;
   }
   
@@ -31,27 +37,23 @@ namespace sta
   {
     cv::Mat data = _data.getMat();
     
-    int patch_rows = data.rows / grid_size_.height;
-    int patch_cols = data.cols / grid_size_.width;
+    int patch_rows = data.rows / rows_;
+    int patch_cols = data.cols / cols_;
     
     if(patch_rows <= 0 || patch_cols <= 0) {
       std::cerr << "Warning: Patch to small to process. Skipping frame." << std::endl;
       return;
     }
     
-    for (int row = 0; row < grid_size_.height; row++) {
-      for (int col = 0; col < grid_size_.width; col++) {
+    for (int row = 0; row < rows_; row++) {
+      for (int col = 0; col < cols_; col++) {
         
         // extract patch (just working with Mat's header, no actual data is modified/copied here)
         cv::Range row_range(row * patch_rows, (row + 1) * patch_rows);
         cv::Range col_range(col * patch_cols, (col + 1) * patch_cols);
         cv::Mat patch(data, row_range, col_range);
         
-        // extract histogram from current patch (just working with Mat's header, no actual data is modified/copied here)
-        int index = row * grid_size_.width + col;
-        cv::Range histogram_range(cv::Range(index * kernel_.getHistogramBinCount(), (index + 1) * kernel_.getHistogramBinCount()));
-        cv::Mat descriptor_part_ = descriptor_.rowRange(histogram_range);
-        cv::Mat histogram(kernel_.getHistogramBinCount(), 1, CV_32F, cv::Scalar(0));
+        cv::Mat histogram = cv::Mat::zeros(kernel_.getHistogramBinCount(), 1, CV_32F);
         
         // calculate histogram
         kernel_(patch, histogram);
@@ -60,6 +62,9 @@ namespace sta
         if (normalize_) {
           cv::normalize(histogram, histogram);
         }
+        
+        // get descriptor part that represents histogram for current patch
+        cv::Mat descriptor_part_ = descriptor_[row][col];
         
         // integrate
         integrator_(descriptor_part_, histogram, current_time_);

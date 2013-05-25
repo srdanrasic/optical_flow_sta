@@ -3,46 +3,58 @@
 //  optical_flow_sta
 //
 //  Created by Srđan Rašić on 5/23/13.
-//  Copyright (c) 2013 Srđan Rašić. All rights reserved.
 //
 
 #include "Utilities.h"
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
-
-void draw_histogram(const char * window_name, cv::Mat histogram, cv::Size grid_size)
+void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, cv::Mat image)
 {
-  int rows = grid_size.height;
-  int cols = grid_size.width;
-  int bins = histogram.rows / (rows * cols);
+  int bins = descriptor[0][0].rows;
   
-  cv::Size2i patch_size(80, 80);
+  int patch_rows = 80;
+  int patch_cols = 80;
   int patch_spacing = 20;
   
-  cv::Mat canvas = cv::Mat::zeros((patch_size.width + patch_spacing) * cols + patch_spacing,
-                                  (patch_size.height + patch_spacing) * rows + patch_spacing, CV_8UC3);
-  double tickness = patch_size.width / bins;
+  cv::Mat canvas;
+  cv::Size size = cv::Size((patch_cols + patch_spacing) * cols,
+                           (patch_rows + patch_spacing) * rows);
+  
+  if (image.empty()) {
+    canvas  = cv::Mat::zeros(size, CV_8UC3);
+  } else {
+    cv::resize(image, canvas, size);
+    cv::cvtColor(canvas, canvas, CV_GRAY2BGR);
+  }
+
+  double tickness = patch_cols / bins;
   
   cv::Scalar color(255,0,0);
   cv::RNG rng(324);
   
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < cols; j++) {
-      int hidx = (j * rows + i) * bins;
       
       int icolor = (unsigned)rng;
       color = cv::Scalar(icolor & 255, (icolor >> 8) & 255, (icolor >> 16) & 255);
       
       double max;
-      cv::minMaxLoc(histogram.rowRange(hidx, hidx + bins), 0, &max);
+      cv::minMaxLoc(descriptor[i][j], 0, &max);
+      
+      cv::Point origin((patch_rows + patch_spacing) * j + patch_spacing/2,
+                       (patch_cols + patch_spacing) * i + patch_spacing/2);
+      
+      cv::rectangle(canvas,
+                    origin - cv::Point(patch_spacing/2, patch_spacing/2),
+                    origin + cv::Point(patch_rows, patch_cols) + cv::Point(patch_spacing/2, patch_spacing/2),
+                    cv::Scalar(200, 200, 200));
       
       for (int k = 0; k < bins; k++) {
-        cv::Point origin((patch_size.width + patch_spacing) * i + patch_spacing,
-                         (patch_size.height + patch_spacing) * j + patch_spacing);
         cv::line(canvas,
-                 origin + cv::Point(k * tickness, patch_size.height),
-                 origin + cv::Point(k * tickness, patch_size.height - (histogram.at<float>(hidx + k, 0) / max * (float)patch_size.height)),
+                 origin + cv::Point(k * tickness, patch_rows),
+                 origin + cv::Point(k * tickness, patch_rows - (descriptor[i][j].at<float>(k, 0) / max * (float)patch_rows)),
                  color, tickness/3);
       }
     }
