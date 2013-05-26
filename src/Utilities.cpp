@@ -10,15 +10,20 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-void draw_descriptor(const char * window_name, cv::Mat * _descriptor, int size, bool normalize)
+void draw_descriptor(const char * window_name, cv::Mat * _descriptor, int rows, int cols, int bins, bool normalize)
 {
-  cv::Mat ** descriptor = new cv::Mat*[1];
-  descriptor[0] = new cv::Mat[size];
-  for (int i = 0; i < size; i++) {
-    descriptor[0][i] = _descriptor[i];
-  }
+  cv::Mat ** descriptor = new cv::Mat*[rows];
+  
+  for (int row = 0; row < rows; row++) {
+    descriptor[row] = new cv::Mat[cols * bins];
+    for (int col = 0; col < cols; col++) {
+      for (int bin = 0; bin < bins; bin++) {
+        descriptor[row][col*bins+bin] = _descriptor[(row*cols+col)*bins+bin];
+      }
+    }
+  }  
 
-  draw_descriptor(window_name, descriptor, 1, size, normalize);
+  draw_descriptor(window_name, descriptor, rows, cols * bins, normalize);
 }
 
 void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, bool normalize, cv::Mat image)

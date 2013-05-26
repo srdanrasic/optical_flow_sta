@@ -18,6 +18,7 @@ namespace sta
   {
   public:
     OpticalFlowKernel(int n) : Kernel(n) {}
+    virtual cv::string getName() const { return "OpticalFlowKernel"; };
     virtual void operator()(const cv::InputArray &patch, cv::InputOutputArray &histogram);
   };
 }

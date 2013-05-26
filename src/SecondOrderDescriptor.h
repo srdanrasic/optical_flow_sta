@@ -27,6 +27,7 @@ namespace sta
      *  \param first_order_descriptor STA1 upon to build STA2
      */
     SecondOrderDescriptor(FirstOrderDescriptor &first_order_descriptor, int bins);
+    ~SecondOrderDescriptor();
     
     /*! Returns decriptor
      */

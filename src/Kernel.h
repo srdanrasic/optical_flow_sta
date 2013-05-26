@@ -25,6 +25,12 @@ namespace sta
      */
     Kernel(int n) : number_of_bins_(n) {}
     
+    virtual ~Kernel() {}
+    
+    /*! Return kernel name 
+     */
+    virtual cv::string getName() const = 0;
+    
     /*! Returns number of histogram bins
      */
     int getHistogramBinCount() const { return number_of_bins_; }

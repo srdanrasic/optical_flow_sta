@@ -20,6 +20,10 @@ namespace sta
     first_order_descriptor_.normalize_ = true;
     reset();
   }
+  SecondOrderDescriptor::~SecondOrderDescriptor()
+  {
+    delete [] descriptor_;
+  }
   
   void SecondOrderDescriptor::reset()
   {

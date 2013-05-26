@@ -19,6 +19,12 @@ namespace sta
     reset();
   }
   
+  FirstOrderDescriptor::~FirstOrderDescriptor()
+  {
+    for (int i = 0; i < rows_; i++) delete [] descriptor_[i];    
+    delete [] descriptor_;
+  }
+  
   void FirstOrderDescriptor::reset()
   {
     descriptor_ = new cv::Mat*[rows_];

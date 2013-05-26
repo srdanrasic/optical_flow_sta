@@ -33,6 +33,7 @@ namespace sta
      *  \param kernel Kernel to use
      */
     FirstOrderDescriptor(int rows, int cols, Kernel &kernel, Integrator &integate_function, bool normalize);
+    ~FirstOrderDescriptor();
     
     /*! Returns decriptor
      */
