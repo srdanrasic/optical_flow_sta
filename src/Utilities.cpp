@@ -10,7 +10,18 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, cv::Mat image)
+void draw_descriptor(const char * window_name, cv::Mat * _descriptor, int size, bool normalize)
+{
+  cv::Mat ** descriptor = new cv::Mat*[1];
+  descriptor[0] = new cv::Mat[size];
+  for (int i = 0; i < size; i++) {
+    descriptor[0][i] = _descriptor[i];
+  }
+
+  draw_descriptor(window_name, descriptor, 1, size, normalize);
+}
+
+void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, bool normalize, cv::Mat image)
 {
   int bins = descriptor[0][0].rows;
   
@@ -40,8 +51,10 @@ void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, 
       int icolor = (unsigned)rng;
       color = cv::Scalar(icolor & 255, (icolor >> 8) & 255, (icolor >> 16) & 255);
       
-      double max;
-      cv::minMaxLoc(descriptor[i][j], 0, &max);
+      double max = 1;
+      if (normalize) {
+        cv::minMaxLoc(descriptor[i][j], 0, &max);
+      }
       
       cv::Point origin((patch_rows + patch_spacing) * j + patch_spacing/2,
                        (patch_cols + patch_spacing) * i + patch_spacing/2);

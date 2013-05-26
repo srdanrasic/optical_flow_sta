@@ -8,7 +8,6 @@
 #include "FirstOrderDescriptor.h"
 #include <iostream>
 #include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/video/video.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 
@@ -33,7 +32,7 @@ namespace sta
     current_time_ = 0;
   }
   
-  void FirstOrderDescriptor::update(cv::InputArray _data)
+  bool FirstOrderDescriptor::update(cv::InputArray _data)
   {
     cv::Mat data = _data.getMat();
     
@@ -42,7 +41,7 @@ namespace sta
     
     if(patch_rows <= 0 || patch_cols <= 0) {
       std::cerr << "Warning: Patch to small to process. Skipping frame." << std::endl;
-      return;
+      return false;
     }
     
     for (int row = 0; row < rows_; row++) {
@@ -71,6 +70,7 @@ namespace sta
       }
     }
     
-    current_time_++;    
+    current_time_++;
+    return true;
   }
 }

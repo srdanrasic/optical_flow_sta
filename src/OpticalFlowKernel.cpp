@@ -33,7 +33,7 @@ namespace sta
     for (int i = 0; i < angle.rows; i++) {
       for (int j = 0; j < angle.cols; j++) {
         float m = mag.at<float>(i, j);
-        float a = angle.at<float>(i, j) * angle_scale - 0.5f;
+        float a = angle.at<float>(i, j) * angle_scale;
         int hidx = floor(a);
         
         if( hidx < 0 )

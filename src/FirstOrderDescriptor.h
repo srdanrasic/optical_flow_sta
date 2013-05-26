@@ -46,7 +46,10 @@ namespace sta
     /*! Updates descriptor with new data
      * \param data Input data (depending on kernel - image or optical flow)
      */
-    void update(cv::InputArray data);
+    bool update(cv::InputArray data);
+  
+    
+    friend class SecondOrderDescriptor;
   };
 }
 

@@ -12,6 +12,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include "FirstOrderDescriptor.h"
+#include "SecondOrderDescriptor.h"
 #include "IntensityKernel.h"
 #include "OpticalFlowKernel.h"
 #include "MeanIntegrator.h"
@@ -20,21 +21,17 @@
 
 int main(int, char**)
 {
-  cv::VideoCapture cap("/Users/srdan/Downloads/running/person02_running_d1_uncomp.avi");
+  cv::VideoCapture cap("/Users/srdan/Downloads/running/person02_running_d3_uncomp.avi");
   cv::Mat prev, next, flow;
   
-  cv::namedWindow("Descriptor", CV_WINDOW_AUTOSIZE);
-  cv::moveWindow("Descriptor", 100, 100);
-  cv::namedWindow("Display window", CV_WINDOW_AUTOSIZE);
-  cv::moveWindow("Display window", 500, 100);
-  
-  int number_of_bins = 10;
-  int patch_rows = 3;
+  int number_of_bins = 5;
+  int patch_rows = 2;
   int patch_cols = 2;
   
   sta::OpticalFlowKernel kernel(number_of_bins);
   sta::MeanIntegrator integrator;
   sta::FirstOrderDescriptor sta1_descriptor(patch_rows, patch_cols, kernel, integrator, true);
+  sta::SecondOrderDescriptor sta2_descriptor(sta1_descriptor, 5);
   
   if (!cap.isOpened()) {
     return 0;
@@ -52,15 +49,17 @@ int main(int, char**)
     
     cv::cvtColor(next, next, CV_BGR2GRAY);
     cv::calcOpticalFlowFarneback(prev, next, flow, 0.5, 1, 7, 1, 5, 1.1, 0);
-    sta1_descriptor.update(flow);
+    sta2_descriptor.update(flow);
     
-    draw_descriptor("Descriptor", sta1_descriptor.getDescriptor(), patch_rows, patch_cols, next);
+    draw_descriptor("Descriptor 1", sta1_descriptor.getDescriptor(), patch_rows, patch_cols, false, next);
+    draw_descriptor("Descriptor 2", sta2_descriptor.getDescriptor(), patch_rows * patch_cols * number_of_bins, false);
+
     
     prev = next;
     next.release();
     
-    if(cv::waitKey(1) >= 0) {
-      break;
+    if(cv::waitKey(0) >= 0) {
+      //break;
     }
   }
   
