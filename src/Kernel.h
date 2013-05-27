@@ -39,7 +39,7 @@ namespace sta
      * \param patch Patch to process
      * \param histogram Calculated histogram
      */
-    virtual void operator()(const cv::InputArray &patch, cv::InputOutputArray &histogram) = 0;
+    virtual void operator()(const cv::InputArray patch, cv::InputOutputArray histogram) = 0;
   };
 }
 

@@ -9,11 +9,11 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/video/video.hpp>
-#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace sta
 {
-  void IntensityKernel::operator()(cv::InputArray &_patch, cv::InputOutputArray &histogram)
+  void IntensityKernel::operator()(cv::InputArray _patch, cv::InputOutputArray histogram)
   {
     cv::Mat patch = _patch.getMat();
     assert(patch.channels() == 1 && patch.type() == CV_8UC1 && "Need greyscale image of 1 chennel");

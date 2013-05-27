@@ -19,7 +19,7 @@ namespace sta
   class MeanIntegrator : public Integrator
   {
   public:
-    virtual void operator()(cv::InputOutputArray &result, cv::InputArray histogram, int t);
+    virtual void operator()(cv::InputOutputArray result, cv::InputArray histogram, int t);
   };
 }
 

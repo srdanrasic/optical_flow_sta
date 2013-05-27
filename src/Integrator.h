@@ -20,7 +20,7 @@ namespace sta
   public:
     virtual ~Integrator() {}
     
-    virtual void operator()(cv::InputOutputArray &result, cv::InputArray histogram, int t) = 0;
+    virtual void operator()(cv::InputOutputArray result, cv::InputArray histogram, int t) = 0;
   };
 }
 

@@ -19,7 +19,7 @@ namespace sta
   public:
     IntensityKernel(int n) : Kernel(n) {}
     virtual cv::string getName() const { return "IntensityKernel"; };
-    virtual void operator()(const cv::InputArray &patch, cv::InputOutputArray &histogram);
+    virtual void operator()(const cv::InputArray patch, cv::InputOutputArray histogram);
   };
 }
 

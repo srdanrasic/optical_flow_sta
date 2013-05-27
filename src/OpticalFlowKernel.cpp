@@ -9,11 +9,11 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/video/video.hpp>
-#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace sta
 {
-  void OpticalFlowKernel::operator()(cv::InputArray &_patch, cv::InputOutputArray &_histogram)
+  void OpticalFlowKernel::operator()(cv::InputArray _patch, cv::InputOutputArray _histogram)
   {
     cv::Mat patch = _patch.getMat();
     assert(patch.channels() == 2 && patch.type() == CV_32FC2 && "Need optical flow data.");

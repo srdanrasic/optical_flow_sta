@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#  example_kth.sh
+#  example_kth.py
 #  optical_flow_sta
 #
 #  dataset: http://www.nada.kth.se/cvap/actions/
