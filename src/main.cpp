@@ -48,13 +48,30 @@ std::string to_string(cv::Mat ** descriptor, int v, int h)
 
 void usage()
 {
+  std::cout << std::endl;
   std::cout << "Use following parameters to configure program:" << std::endl << std::endl;
-  std::cout << "   -v    Visualize descriptor(s). This option drastically decreases parformance, do not use while evaluating!" << std::endl;
+
+  std::cout << "   --help    Prints this info." << std::endl << std::endl;
+  
+  std::cout << "   -v    Visualize calculation. Do not use while evaluating (reduces performance)!" << std::endl;
   std::cout << "   -i    Interactive (wait for any key press before processing next frame)." << std::endl << std::endl;
   
-  std::cout << "   --input <path>    Input file path. If not specified, default camera is used." << std::endl;
+  std::cout << "   --input <path>    Input file path. If not specified, default camera is used." << std::endl << std::endl;
+  
+  std::cout << "   --annotations <path>    Annotations file. Optional. Bounding box data per line." << std::endl;
+  std::cout << "                           Each line defines bounding box: Xmin Ymin Xmax Ymax" << std::endl;
+  std::cout << "                           Image origin is in top-left. N-th line represents N-th frame." << std::endl<< std::endl;
+  
+  std::cout << "   --annotations_stdin     Read annotations from stdin (just like from file)." << std::endl<< std::endl;
+  
+  std::cout << "   --range <start frame> <end frame>    Specifies range to process. Optional." << std::endl;
+  std::cout << "                                        If annotations file is specified, first line" << std::endl;
+  std::cout << "                                        must contain bounding box for <start frame> frame." << std::endl << std::endl;
+
   std::cout << "   --output <path>   Output file path. If not specified, output is printed to stdout." << std::endl;
-  std::cout << "   --all             Print descriptor for each frame, line by line." << std::endl << std::endl;
+  std::cout << "                     Descriptor is printed as array of numbers in one line." << std::endl << std::endl;
+  
+  std::cout << "   --all             Print descriptors for all frames, line by line." << std::endl << std::endl;
   
   std::cout << "   --sta_order 1 | 2  Defines which STA method to use." << std::endl;
   
@@ -81,7 +98,9 @@ int main(int argc, char* argv[])
   bool interactive = false;
   
   char * path = NULL;
-  const char * out_path = NULL;
+  char * out_path = NULL;
+  char * annotations_path = NULL;
+  bool annotations_from_stdin = false;
   
   bool all_frames = false;
   
@@ -89,6 +108,9 @@ int main(int argc, char* argv[])
   int number_of_bins_sta2 = 5;
   int patches_v = 2;
   int patches_h = 2;
+  
+  int start_frame = 1;
+  int end_frame = 0xFFFFFF;
   
   STAVariant variant = STA_SECOND;
   STAOpticalFlowMethod flow_method = STA_FLOW_FARNEBACK;
@@ -114,7 +136,7 @@ int main(int argc, char* argv[])
   double tvl1_epsilon = 0.01;
   
   /* Parse arguments */
-  if (argc == 2 && strcmp(argv[1], "--help") == 0) {
+  if (argc == 1 || (argc == 2 && strcmp(argv[1], "--help") == 0)) {
     usage();
     return 0;
   }
@@ -126,6 +148,14 @@ int main(int argc, char* argv[])
       interactive = true;
     } else if (strcmp(argv[i], "--input") == 0) {
       path = argv[++i];
+    } else if (strcmp(argv[i], "--annotations") == 0) {
+      annotations_path = argv[++i];
+    } else if (strcmp(argv[i], "--annotations_stdin") == 0) {
+      annotations_from_stdin = true;
+    } else if (strcmp(argv[i], "--range") == 0) {
+      if (i + 2 >= argc) { std::cerr << "Both start and end frame must be defined!" << std::endl; return 0; }
+      start_frame = atoi(argv[++i]);
+      end_frame = atoi(argv[++i]);
     } else if (strcmp(argv[i], "--output") == 0) {
       out_path = argv[++i];
     } else if (strcmp(argv[i], "--all") == 0) {
@@ -137,7 +167,7 @@ int main(int argc, char* argv[])
       else if (strcmp(argv[i], "2") == 0)
         variant = STA_SECOND;
       else {
-        std::cout << "Invalid argument --sta_order: must be 1 or 2." << std::endl; return 0;
+        std::cerr << "Invalid argument --sta_order: must be 1 or 2." << std::endl; return 0;
       }
     } else if (strcmp(argv[i], "--bins_sta1") == 0) {
       i++;
@@ -158,12 +188,12 @@ int main(int argc, char* argv[])
       } else if (strcmp(argv[i], "flow") == 0) {
         measurement = STA_OPTICAL_FLOW;
       } else {
-        std::cout << "Invalid argument --measurement: must be 'intensity' or 'flow'." << std::endl; return 0;
+        std::cerr << "Invalid argument --measurement: must be 'intensity' or 'flow'." << std::endl; return 0;
       }
     } else if (strcmp(argv[i], "--flow_method") == 0) {
       i++;
       if (strcmp(argv[i], "farneback") == 0) {
-        if (i + 6 >= argc) { std::cout << "All parameters for farneback method are required!" << std::endl; return 0; }
+        if (i + 6 >= argc) { std::cerr << "All parameters for farneback method are required!" << std::endl; return 0; }
         flow_method = STA_FLOW_FARNEBACK;
         fb_pyr_scale = atof(argv[++i]);
         fb_levels = atoi(argv[++i]);
@@ -172,7 +202,7 @@ int main(int argc, char* argv[])
         fb_poly_n = atoi(argv[++i]);
         fb_poly_sigma = atof(argv[++i]);
       } else if (strcmp(argv[i], "tvl1") == 0) {
-        if (i + 6 >= argc) { std::cout << "All parameters for tvl1 method are required!" << std::endl; return 0; }
+        if (i + 6 >= argc) { std::cerr << "All parameters for tvl1 method are required!" << std::endl; return 0; }
         flow_method = STA_FLOW_TVL1;
         tvl1_tau = atof(argv[++i]);
         tvl1_lambda = atof(argv[++i]);
@@ -182,7 +212,7 @@ int main(int argc, char* argv[])
         tvl1_epsilon = atof(argv[++i]);
         //tvl1_iterations = atoi(argv[++i]);
       } else {
-        std::cout << "Invalid flow_method." << std::endl; return 0;
+        std::cerr << "Invalid flow_method." << std::endl; return 0;
       }
     }
   }
@@ -193,6 +223,7 @@ int main(int argc, char* argv[])
     cap = cv::VideoCapture(0);
   } else {
     cap = cv::VideoCapture(path);
+    cap.set(CV_CAP_PROP_POS_FRAMES, start_frame);
   }
   
   if (!cap.isOpened()) {
@@ -200,6 +231,17 @@ int main(int argc, char* argv[])
     return 0;
   }
   
+ 
+   std::ifstream annotations_file;
+  if (annotations_path != NULL) {
+    annotations_file.open(annotations_path);
+    if (!annotations_file.is_open()) {
+      std::cerr << "Unable to open annotations file." << std::endl;
+      return 0;
+    }
+  }
+  
+  std::istream &annotations = (annotations_from_stdin) ? std::cin : annotations_file;
   
   std::ofstream out_file_stream(out_path);
   std::ostream &out_stream = (out_file_stream.is_open()) ? out_file_stream : std::cout;
@@ -221,9 +263,13 @@ int main(int argc, char* argv[])
   tvl1->set("warps", tvl1_warps);
   tvl1->set("epsilon", tvl1_epsilon);
   
+  int current_frame = start_frame;
   cv::Mat prev, next, flow;
 
   cap >> prev;
+  
+  double xmin = 0, ymin = 0, xmax = 0, ymax = 0;
+  if (annotations.peek() != EOF) { annotations >> ymin >> xmin >> ymax >> xmax; }
   
   if (prev.empty()) {
     std::cerr << "Error: No frames found or unable to read stream." << std::endl;
@@ -233,12 +279,22 @@ int main(int argc, char* argv[])
   cv::cvtColor(prev, prev, CV_BGR2GRAY);
   
   while (cap.isOpened()) {
+    
+    current_frame++;
+    
+    if (current_frame > end_frame) {
+      break;
+    }
+    
     cap >> next;
-
+    
     // if no more frames, break
     if (next.empty()) break;
-    
+        
     cv::cvtColor(next, next, CV_BGR2GRAY);
+    
+    // we'll need it later
+    cv::Mat original_next = next;
     
     if (flow_method == STA_FLOW_FARNEBACK) {
       cv::calcOpticalFlowFarneback(prev, next, flow, fb_pyr_scale, fb_levels, fb_winsize, fb_iterations, fb_poly_n, fb_poly_sigma, 0);
@@ -251,6 +307,12 @@ int main(int argc, char* argv[])
       data = &flow;
     }
     
+    if (annotations.peek() != EOF) {
+      annotations >> ymin >> xmin >> ymax >> xmax;
+      (*data) = (*data).rowRange(xmin, xmax).colRange(ymin, ymax);
+      next = original_next.rowRange(xmin, xmax).colRange(ymin, ymax);
+    }
+    
     if (variant == STA_FIRST) {
       sta1_descriptor.update(*data);
       if (all_frames) out_stream << to_string(sta1_descriptor.getDescriptor(), patches_v, patches_h) << std::endl;
@@ -259,14 +321,16 @@ int main(int argc, char* argv[])
       if (all_frames) out_stream << to_string(sta2_descriptor.getDescriptor(), patches_v * patches_h * number_of_bins_sta1) << std::endl;
     }
     
-    prev = next;
+    prev = original_next;
 
     if (visualize) {
       if (variant == STA_SECOND) {
         draw_descriptor("STA 2", sta2_descriptor.getDescriptor(), patches_v, patches_h, number_of_bins_sta1, false);
+        cv::moveWindow("STA 2", 50, 300);
       }
       
       draw_descriptor("STA 1", sta1_descriptor.getDescriptor(), patches_v, patches_h, false, next);
+      cv::moveWindow("STA 1", 50, 0);
       
       if(cv::waitKey((interactive) ? 0 : 1) == 27) {
         break;

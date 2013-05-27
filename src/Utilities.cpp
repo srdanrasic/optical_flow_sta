@@ -26,7 +26,7 @@ void draw_descriptor(const char * window_name, cv::Mat * _descriptor, int rows, 
   draw_descriptor(window_name, descriptor, rows, cols * bins, normalize);
 }
 
-void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, bool normalize, cv::Mat image)
+void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, int cols, bool normalize, cv::Mat image, cv::Rect rect)
 {
   int bins = descriptor[0][0].rows;
   
@@ -41,6 +41,8 @@ void draw_descriptor(const char * window_name, cv::Mat ** descriptor, int rows, 
   if (image.empty()) {
     canvas  = cv::Mat::zeros(size, CV_8UC3);
   } else {
+    //double rs = size.height / image.rows, cs = size.width / image.cols;
+    cv::rectangle(image, rect, cv::Scalar(0,255,0));
     cv::resize(image, canvas, size);
     cv::cvtColor(canvas, canvas, CV_GRAY2BGR);
   }

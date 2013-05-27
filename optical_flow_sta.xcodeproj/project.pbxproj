@@ -11,7 +11,7 @@
 		EC80B28B174F9FB0008D1B4A /* MeanIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC80B289174F9FB0008D1B4A /* MeanIntegrator.cpp */; };
 		EC80B29117500B5B008D1B4A /* OpticalFlowKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC80B28F17500B5B008D1B4A /* OpticalFlowKernel.cpp */; };
 		EC80B294175248E5008D1B4A /* SecondOrderDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC80B2921752489B008D1B4A /* SecondOrderDescriptor.cpp */; };
-		EC80B2961752798F008D1B4A /* example_basic.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = EC80B2951752795A008D1B4A /* example_basic.sh */; };
+		EC80B2961752798F008D1B4A /* example_kth.py in CopyFiles */ = {isa = PBXBuildFile; fileRef = EC80B2951752795A008D1B4A /* example_kth.py */; };
 		EC8618D1174E7697005E583F /* FirstOrderDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC8618CF174E75FC005E583F /* FirstOrderDescriptor.cpp */; };
 		EC8618D2174E7886005E583F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC5E702E174E2BFE009F476C /* main.cpp */; };
 		EC8618E0174E9CC0005E583F /* libopencv_core.2.4.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EC8618DC174E9CC0005E583F /* libopencv_core.2.4.5.dylib */; };
@@ -28,7 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				EC80B2961752798F008D1B4A /* example_basic.sh in CopyFiles */,
+				EC80B2961752798F008D1B4A /* example_kth.py in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,7 +47,7 @@
 		EC80B29017500B5B008D1B4A /* OpticalFlowKernel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpticalFlowKernel.h; path = src/OpticalFlowKernel.h; sourceTree = "<group>"; };
 		EC80B2921752489B008D1B4A /* SecondOrderDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SecondOrderDescriptor.cpp; path = src/SecondOrderDescriptor.cpp; sourceTree = "<group>"; };
 		EC80B2931752489B008D1B4A /* SecondOrderDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondOrderDescriptor.h; path = src/SecondOrderDescriptor.h; sourceTree = "<group>"; };
-		EC80B2951752795A008D1B4A /* example_basic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = example_basic.sh; sourceTree = "<group>"; };
+		EC80B2951752795A008D1B4A /* example_kth.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = example_kth.py; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.python; };
 		EC8618CF174E75FC005E583F /* FirstOrderDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstOrderDescriptor.cpp; path = src/FirstOrderDescriptor.cpp; sourceTree = "<group>"; };
 		EC8618D0174E75FC005E583F /* FirstOrderDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = FirstOrderDescriptor.h; path = src/FirstOrderDescriptor.h; sourceTree = "<group>"; tabWidth = 2; };
 		EC8618D3174E9C0F005E583F /* code_completion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = code_completion; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,7 +113,7 @@
 				EC8618DE174E9CC0005E583F /* libopencv_imgproc.2.4.5.dylib */,
 				EC8618DF174E9CC0005E583F /* libopencv_video.2.4.5.dylib */,
 				EC5E7032174E2C5C009F476C /* CMakeLists.txt */,
-				EC80B2951752795A008D1B4A /* example_basic.sh */,
+				EC80B2951752795A008D1B4A /* example_kth.py */,
 			);
 			name = Other;
 			sourceTree = "<group>";
