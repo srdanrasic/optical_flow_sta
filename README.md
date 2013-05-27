@@ -14,3 +14,8 @@ Example usage
     vim example_kth.py  # configure dataset directory path
     ./example_kth.py
 
+
+Requirements
+-----
+* OpenCV 2
+* CMake
