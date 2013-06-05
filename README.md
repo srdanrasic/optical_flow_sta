@@ -17,5 +17,5 @@ Example usage
 
 Requirements
 -----
-* OpenCV 2
+* OpenCV 2.4.5
 * CMake
